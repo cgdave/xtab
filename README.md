@@ -1,4 +1,4 @@
-xtab
-====
+xTab jQuery plugin
+==================
 
-Simple spreadsheet-like table jQuery plugin
+sTab is a simple spreadsheet-like table jQuery plugin.

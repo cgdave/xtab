@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="iso-8859-1"/>
+<title>xTab demo</title>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="xtab.js"></script>
+<link rel="stylesheet" href="xtab.css"/>
+<style type="text/css" media="screen">
+html, body { background-color : white; color : black; font-family :  Arial, Verdana, Helvetica; }
+p,a,ul,li,td,th { font-size : 12pt; }
+h1 { font-size : 16pt; }
+h2 { font-size : 14pt; }
+</style>
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#test").xtab("init", 5, 3);
+	$("#ok").click(function() {
+		console.log($("#test").xtab("val"));
+	});
+});
+</script>
+</head>
+<body>
+<div id="test"></div>
+<button id="ok">OK</button>
+</body>
+</html>

@@ -1,0 +1,4 @@
+.xtab, .xtab tr, .xtab td, .xtab input { border: 0px; padding: 0px; margin: 0px; border-collapse: collapse; }
+table.xtab { border: solid 1px gray; }
+.xtab td { border: dotted 1px gray;  width: 50px; }
+.xtab input { padding: 3px; }
