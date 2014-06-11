@@ -18,7 +18,7 @@
 					if (opts.change) c.change(function() {
 						var i = $(this);
 						var n = i.attr("id").split("-");
-						opts.change.call(this, parseInt(n[1]), parseInt(n[2]), i.val());
+						opts.change.call(this, parseInt(n[1]) - 1, parseInt(n[2]) - 1, i.val());
 					});
 					if (opts.width > 0) c.css("width", opts.width + "px");
 					r.append($("<td/>").append(c.keydown(function(e) {
