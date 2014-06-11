@@ -10,21 +10,25 @@
 					r.append($("<td/>").append(c.keydown(function(e) {
 						var k = e.keyCode;
 						if (k == 37) {
+							e.preventDefault();
 							var n = $(this).attr("id").split("-");
 							var i = parseInt(n[2]);
-							if (i > 0) $("#" + n[1] + "-" + (i-1)).focus();
+							if (i > 0) $("#" + id + "-" + n[1] + "-" + (i-1)).focus();
 						} else if (k == 38) {
+							e.preventDefault();
 							var n = $(this).attr("id").split("-");
 							var i = parseInt(n[1]);
-							if (i > 0) $("#" + (i-1) + "-" + n[2]).focus();
+							if (i > 0) $("#" + id + "-" + (i-1) + "-" + n[2]).focus();
 						} else if (k == 39) {
+							e.preventDefault();
 							var n = $(this).attr("id").split("-");
 							var i = parseInt(n[2]);
-							if (i < nc) $("#" + n[1] + "-" + (i+1)).focus();
+							if (i < nc) $("#" + id + "-" + n[1] + "-" + (i+1)).focus();
 						} else if (k == 40 || k == 13) {
+							e.preventDefault();
 							var n = $(this).attr("id").split("-");
 							var i = parseInt(n[1]);
-							if (i < nr) $("#" + (i+1) + "-" + n[2]).focus();
+							if (i < nr) $("#" + id + "-" + (i+1) + "-" + n[2]).focus();
 						}
 					})));
 				}
