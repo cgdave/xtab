@@ -1,10 +1,17 @@
 (function($) {
-    $.fn.xtab = function(act, nr, nc) {
+    $.fn.xtab = function(act, nr, nc, h) {
 		var id = $(this).attr("id");
 		if (act == "init" && parseInt(nr) > 0 && parseInt(nc) > 0) {
 			var t = $("<table/>").addClass("xtab");
+			if (h) {
+				var hr = $("<tr/>");
+				hr.append($("<th/>"));
+				for (var j = 1; j <= nc; j++) hr.append($("<th/>").text(j));
+				t.append(hr);
+			}
 			for (var i = 1; i <= nr; i++) {
-				var r = $("<tr/>");
+				r = $("<tr/>");
+				if (h) r.append($("<th/>").text(i));
 				for (var j = 1; j <= nc; j++) {
 					var c = $("<input/>", { type: "text", id: id + "-" + i + "-" + j });
 					r.append($("<td/>").append(c.keydown(function(e) {
@@ -44,7 +51,7 @@
 				$(this).find("input").each(function() {
 					r.push($(this).val());
 				});
-				v.push(r);
+				if (r.length > 0) v.push(r);
 			});
 			return v;
 		} else {
