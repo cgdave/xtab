@@ -35,6 +35,7 @@
 				t.append(r);
 			}
 			$(this).append(t);
+			$("#" + id + "-1-1").focus();
         	return this;
 		} else if (act == "val") {
 			var v = []
