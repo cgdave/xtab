@@ -2,7 +2,7 @@
 	$.fn.xtab = function(act, opts) {
 		var id = $(this).attr("id");
 		if (opts === undefined) opts = {};
-		if (act == "init" && parseInt(opts.rows) > 0 && parseInt(opts.cols) > 0) {
+		if (act == "init" && opts.rows > 0 && opts.cols > 0) {
 			var t = $("<table/>").addClass("xtab");
 			if (opts.headers) {
 				var hr = $("<tr/>");
@@ -15,6 +15,11 @@
 				if (opts.headers) r.append($("<th/>").text(i));
 				for (var j = 1; j <= opts.cols; j++) {
 					var c = $("<input/>", { type: "text", id: id + "-" + i + "-" + j });
+					if (opts.change) c.change(function() {
+						var i = $(this);
+						var n = i.attr("id").split("-");
+						opts.change.call(this, parseInt(n[1]), parseInt(n[2]), i.val());
+					});
 					r.append($("<td/>").append(c.keydown(function(e) {
 						var k = e.keyCode;
 						if (k == 37) {
@@ -50,6 +55,7 @@
 			$(this).find(".xtab tr").each(function() {
 				var r = [];
 				$(this).find("input").each(function() {
+					
 					r.push($(this).val());
 				});
 				if (r.length > 0) v.push(r);
