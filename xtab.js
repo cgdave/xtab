@@ -1,5 +1,5 @@
 (function($) {
-    $.fn.xtab = function(act, nr, nc, h) {
+	$.fn.xtab = function(act, nr, nc, h) {
 		var id = $(this).attr("id");
 		if (act == "init" && parseInt(nr) > 0 && parseInt(nc) > 0) {
 			var t = $("<table/>").addClass("xtab");
@@ -43,9 +43,9 @@
 			}
 			$(this).append(t);
 			$("#" + id + "-1-1").focus();
-        	return this;
+			return this;
 		} else if (act == "val") {
-			var v = []
+			var v = [];
 			$(this).find(".xtab tr").each(function() {
 				var r = [];
 				$(this).find("input").each(function() {
@@ -57,5 +57,5 @@
 		} else {
 			console.error("Unknown action: " + act);
 		}
-    };
+	};
 }(jQuery));
