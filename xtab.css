@@ -2,3 +2,4 @@
 table.xtab { border: solid 1px gray; }
 .xtab td { border: dotted 1px gray;  width: 50px; }
 .xtab input { padding: 3px; }
+.xtab input:focus { padding: 2px; border: solid 1px blue; }
