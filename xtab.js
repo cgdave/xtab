@@ -20,6 +20,7 @@
 						var n = i.attr("id").split("-");
 						opts.change.call(this, parseInt(n[1]), parseInt(n[2]), i.val());
 					});
+					if (opts.width > 0) c.css("width", opts.width + "px");
 					r.append($("<td/>").append(c.keydown(function(e) {
 						var k = e.keyCode;
 						if (k == 37) {
