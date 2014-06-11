@@ -1,18 +1,19 @@
 (function($) {
-	$.fn.xtab = function(act, nr, nc, h) {
+	$.fn.xtab = function(act, opts) {
 		var id = $(this).attr("id");
-		if (act == "init" && parseInt(nr) > 0 && parseInt(nc) > 0) {
+		if (opts === undefined) opts = {};
+		if (act == "init" && parseInt(opts.rows) > 0 && parseInt(opts.cols) > 0) {
 			var t = $("<table/>").addClass("xtab");
-			if (h) {
+			if (opts.headers) {
 				var hr = $("<tr/>");
 				hr.append($("<th/>"));
-				for (var j = 1; j <= nc; j++) hr.append($("<th/>").text(j));
+				for (var j = 1; j <= opts.cols; j++) hr.append($("<th/>").text(j));
 				t.append(hr);
 			}
-			for (var i = 1; i <= nr; i++) {
+			for (var i = 1; i <= opts.rows; i++) {
 				r = $("<tr/>");
-				if (h) r.append($("<th/>").text(i));
-				for (var j = 1; j <= nc; j++) {
+				if (opts.headers) r.append($("<th/>").text(i));
+				for (var j = 1; j <= opts.cols; j++) {
 					var c = $("<input/>", { type: "text", id: id + "-" + i + "-" + j });
 					r.append($("<td/>").append(c.keydown(function(e) {
 						var k = e.keyCode;
@@ -30,12 +31,12 @@
 							e.preventDefault();
 							var n = $(this).attr("id").split("-");
 							var i = parseInt(n[2]);
-							if (i < nc) $("#" + id + "-" + n[1] + "-" + (i+1)).focus();
+							if (i < opts.cols) $("#" + id + "-" + n[1] + "-" + (i+1)).focus();
 						} else if (k == 40 || k == 13) {
 							e.preventDefault();
 							var n = $(this).attr("id").split("-");
 							var i = parseInt(n[1]);
-							if (i < nr) $("#" + id + "-" + (i+1) + "-" + n[2]).focus();
+							if (i < opts.rows) $("#" + id + "-" + (i+1) + "-" + n[2]).focus();
 						}
 					})));
 				}
