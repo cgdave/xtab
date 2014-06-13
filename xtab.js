@@ -23,11 +23,11 @@
 				r = $("<tr/>");
 				if (opts.headers) r.append($("<th/>").text(i));
 				for (var j = 1; j <= opts.cols; j++) {
-					var c = $("<input/>", { type: "text", id: id + "-" + i + "-" + j });
+					var c = $("<input/>", { type: "text", id: id + "-" + (i-1) + "-" + (j-1) });
 					if (opts.change) c.change(function() {
 						var i = $(this);
 						var n = i.attr("id").split("-");
-						opts.change.call(this, parseInt(n[1]) - 1, parseInt(n[2]) - 1, i.val());
+						opts.change.call(this, parseInt(n[1]), parseInt(n[2]), i.val());
 					});
 					if (opts.width > 0) c.css("width", opts.width + "px");
 					r.append($("<td/>").append(c.keydown(function(e) {
@@ -58,11 +58,24 @@
 				t.append(r);
 			}
 			$(this).append(t);
-			$("#" + id + "-1-1").focus();
+			$("#" + id + "-0-0").focus();
 			return this;
 		} else if (act == "val") {
-			var i = parseInt(arguments[1]);
-			var j = parseInt(arguments[2]);
+			var i = -1;
+			var j = -1;
+			if (arguments.length > 1 && typeof arguments[1] === "string") {
+				var c = arguments[1].toUpperCase();
+				if (c.length == 2) {
+					i = c.charCodeAt(0) - 65;
+					j = parseInt(c.substring(1)) - 1;
+				} else if (c.length == 3) {
+					i = (c.charCodeAt(0) - 65) * 26 + c.charCodeAt(1) - 65;
+					j = parseInt(c.substring(2)) - 1;
+				}
+			} else if (arguments.length > 2) {
+				i = parseInt(arguments[1]);
+				j = parseInt(arguments[2]);
+			}
 			if (i >= 0 && j >=0) {
 				return $("#" + id + "-" + i + "-" + j).val();
 			} else {
