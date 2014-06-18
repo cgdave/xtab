@@ -9,7 +9,7 @@ Usage:
 // Creates a 10 rows and 20 columns table with headers
 $("#mydiv").xtab("init", { rows: 10, cols: 20, header: true });
 // Get the table value as an 10x20 string array
-$("#mydiv").xtab("val");
+console.log($("#mydiv").xtab("val"));
 ```
 
 License
