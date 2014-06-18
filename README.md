@@ -12,6 +12,8 @@ $("#mydiv").xtab("init", { rows: 10, cols: 20, header: true });
 console.log($("#mydiv").xtab("val"));
 ```
 
+Look at provided `index.html` for a more detailed example.
+
 License
 -------
 
