@@ -35,11 +35,14 @@ $(document).ready(function() {
 		}
 	});
 	t.xtab("color", "A3", "lightblue");
-	$("#b2").click(function() { console.log(t.xtab("get")); });
-	$("#b3").click(function() { console.log(t.xtab("get", 0, 1)); });
-	$("#b4").click(function() { console.log(t.xtab("get", "B3")); });
-	$("#b5").click(function() { t.xtab("set", 1, 2, "value 1"); });
-	$("#b6").click(function() { t.xtab("set", "D4", "value 2"); });
+	$("#b2").click(function() { console.log(t.xtab("val")); });
+	$("#b3").click(function() { console.log(t.xtab("val", 0, 1)); });
+	$("#b4").click(function() { console.log(t.xtab("val", "B3")); });
+	$("#b5").click(function() { t.xtab("val", 1, 2, "value 1"); });
+	$("#b6").click(function() {
+		t.xtab("readonly", "D2", !t.xtab("readonly", "D2"));
+		t.xtab("val", "D2", parseInt(t.xtab("val", "D2")) + 1);
+	});
 });
 </script>
 </head>
@@ -52,7 +55,7 @@ $(document).ready(function() {
 <button id="b3">Get value at [0,1] = "B1"</button>&nbsp;
 <button id="b4">Get value at "B3"</button>&nbsp;
 <button id="b5">Set value at [1,2] = "C2"</button>&nbsp;
-<button id="b6">Set value at "D4"</button>&nbsp;
+<button id="b6">Increase value at "D2" (and toggle it readonly)</button>&nbsp;
 <br/>See console for values...
 </body>
 </html>
