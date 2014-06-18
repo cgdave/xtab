@@ -3,6 +3,8 @@ xTab jQuery plugin
 
 xTab is a very simple spreadsheet-like table jQuery plugin.
 
+![xTab snapshot](https://raw.githubusercontent.com/cgdave/xtab/master/snapshot.jpg)
+
 Usage:
 
 ```javascript
