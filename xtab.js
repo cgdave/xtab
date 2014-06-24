@@ -127,6 +127,8 @@
 				return tab;
 			} else
 				return val(cell(), args[0]);
+		} else if (act == "focus") {
+			return cell().focus();
 		} else if (act == "color") {
 			return css(cell(), "background-color", args[0]);
 		} else if (act == "readonly") {
