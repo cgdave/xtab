@@ -43,7 +43,14 @@
 		function val(c, v) {
 			if (c === undefined) return;
 			if (v === undefined) return c.val();
-			c.val(v);
+			if ($.isPlainObject(v)) {
+				val(c, v.value);
+				if (v.readonly !== undefined)
+					readonly(c, v.readonly);
+				if (v.color !== undefined)
+					color(c, v.color);
+			} else
+				c.val(v);
 		}
 		function css(c, a, v) {
 			if (c === undefined || a === undefined) return;
@@ -98,16 +105,8 @@
 						v = opts.values.call(this, r, c);
 					else if (opts.values !== undefined && opts.values[r] !== undefined && opts.values[r][c] !== undefined)
 						v = opts.values[r][c];
-					if (v !== undefined) {
-						if ($.isPlainObject(v)) {
-							val(cell, v.value);
-							if (v.readonly !== undefined)
-								readonly(cell, v.readonly);
-							if (v.color !== undefined)
-								color(cell, v.color);
-						} else
-							val(cell, v);
-					}
+					if (v !== undefined)
+						val(cell, v);
 					if (opts.change !== undefined) cell.change(function() {
 						var cell = $(this);
 						var n = cell.attr("id").split("-");

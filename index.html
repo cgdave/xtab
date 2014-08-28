@@ -15,7 +15,7 @@ button { margin: 5px; }
 </style>
 <script type="text/javascript">
 $(document).ready(function() {
-	var t = $("#t");
+	var t = $("#t1");
 	// Basic example
 	t.xtab("init", {
 		rows: 5,
@@ -38,12 +38,13 @@ $(document).ready(function() {
 	$("#b3").click(function() { console.log(t.xtab("val", 0, 1)); });
 	$("#b4").click(function() { console.log(t.xtab("val", "B3")); });
 	$("#b5").click(function() { t.xtab("val", 1, 2, "value 1"); });
-	$("#b6").click(function() {
+	$("#b6").click(function() { t.xtab("val", "D2", { value: "value 2", readonly: true, color: "green" }); });
+	$("#b7").click(function() {
 		t.xtab("readonly", "D2", !t.xtab("readonly", "D2"));
 		t.xtab("val", "D2", parseInt(t.xtab("val", "D2")) + 1);
 	});
 	// Another example using functions
-	/*t.xtab("init", {
+	/*$("#t2").xtab("init", {
 		rows: 8, cols: 8,
 		widths: function(c) { return 100 + c*10; },
 		rowlabels: function(r) { return "row " + r; },
@@ -63,12 +64,14 @@ $(document).ready(function() {
 </script>
 </head>
 <body>
-<div id="t"></div>
+<div id="t1"></div>
 <button id="b2">Get all values</button>&nbsp;
 <button id="b3">Get value at [0,1] = "B1"</button>&nbsp;
 <button id="b4">Get value at "B3"</button>&nbsp;
 <button id="b5">Set value at [1,2] = "C2"</button>&nbsp;
-<button id="b6">Increase value at "D2" (and toggle it readonly)</button>&nbsp;
+<button id="b6">Set value and properties at "D2"</button>&nbsp;
+<button id="b7">Increase value at "D2" (and toggle it readonly)</button>&nbsp;
 <br/>See console for values...
+<div id="t2"></div>
 </body>
 </html>
