@@ -78,8 +78,8 @@
 					row.append($.isFunction(opts.rownumbers) ? opts.rownumbers.call(this, c) : $("<th/>").text(n2r(r)));
 				for (var c = 0; c < opts.cols; c++) {
 					var cell = $("<input/>", { type: "text", id: id + "-" + r + "-" + c }).prop("readonly", false).data("ref", ref(r, c));
-					if ($.isFunction(opts.value))
-						val(opts.values.call(this, r, c));
+					if ($.isFunction(opts.values))
+						val(cell, opts.values.call(this, r, c));
 					else if (opts.values !== undefined && opts.values[r] !== undefined && opts.values[r][c] !== undefined)
 						val(cell, opts.values[r][c]);
 					if (opts.change !== undefined) cell.change(function() {
