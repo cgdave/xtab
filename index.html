@@ -15,9 +15,7 @@ button { margin: 5px; }
 </style>
 <script type="text/javascript">
 $(document).ready(function() {
-	//$("#t1").xtab("init");
-	//$("#b1").click(function() { console.log($("#t1").xtab("get")); });
-	var t = $("#t2");
+	var t = $("#t");
 	t.xtab("init", {
 		rows: 5,
 		cols: 5,
@@ -47,7 +45,7 @@ $(document).ready(function() {
 </script>
 </head>
 <body>
-<div id="t2"></div>
+<div id="t"></div>
 <button id="b2">Get all values</button>&nbsp;
 <button id="b3">Get value at [0,1] = "B1"</button>&nbsp;
 <button id="b4">Get value at "B3"</button>&nbsp;

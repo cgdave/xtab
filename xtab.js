@@ -66,16 +66,22 @@
 			var tab = $("<table/>").addClass("xtab");
 			if (opts.colnumbers) {
 				var row = $("<tr/>");
-				row.append($("<th/>"));
-				for (var c = 0; c < opts.cols; c++) row.append($("<th/>").text(n2c(c)));
+				if (opts.rownumbers)
+					row.append($("<th/>"));
+				for (var c = 0; c < opts.cols; c++)
+					row.append($.isFunction(opts.colnumbers) ? opts.colnumbers.call(this, c) : $("<th/>").text(n2c(c)));
 				tab.append(row);
 			}
 			for (var r = 0; r < opts.rows; r++) {
 				var row = $("<tr/>");
-				if (opts.rownumbers) row.append($("<th/>").text(n2r(r)));
+				if (opts.rownumbers)
+					row.append($.isFunction(opts.rownumbers) ? opts.rownumbers.call(this, c) : $("<th/>").text(n2r(r)));
 				for (var c = 0; c < opts.cols; c++) {
 					var cell = $("<input/>", { type: "text", id: id + "-" + r + "-" + c }).prop("readonly", false).data("ref", ref(r, c));
-					if (opts.values !== undefined && opts.values[r] !== undefined && opts.values[r][c] !== undefined) val(cell, opts.values[r][c]);
+					if ($.isFunction(opts.value))
+						val(opts.values.call(this, r, c));
+					else if (opts.values !== undefined && opts.values[r] !== undefined && opts.values[r][c] !== undefined)
+						val(cell, opts.values[r][c]);
 					if (opts.change !== undefined) cell.change(function() {
 						var cell = $(this);
 						var n = cell.attr("id").split("-");
@@ -85,27 +91,28 @@
 					if (w > 0) cell.css("width", w + "px");
 					row.append($("<td/>").append(cell.keydown(function(e) {
 						var k = e.keyCode;
-						if (k == 37) {
+						var p = e.target.selectionStart;
+						if (p == 0 && k == 37) { // left
 							e.preventDefault();
 							var n = $(this).attr("id").split("-");
 							var i = parseInt(n[2]);
 							if (i > 0) $("#" + id + "-" + n[1] + "-" + (i - 1)).focus();
-						} else if (k == 38) {
+						} else if (k == 38) { // up
 							e.preventDefault();
 							var n = $(this).attr("id").split("-");
 							var i = parseInt(n[1]);
 							if (i > 0) $("#" + id + "-" + (i - 1) + "-" + n[2]).focus();
-						} else if (k == 39) {
+						} else if (k == 39 && p == e.target.value.length) { // right
 							e.preventDefault();
 							var n = $(this).attr("id").split("-");
 							var i = parseInt(n[2]);
 							if (i < opts.cols) $("#" + id + "-" + n[1] + "-" + (i + 1)).focus();
-						} else if (k == 40 || k == 13) {
+						} else if (k == 40 || k == 13) { // down or enter
 							e.preventDefault();
 							var n = $(this).attr("id").split("-");
 							var i = parseInt(n[1]);
 							if (i < opts.rows) $("#" + id + "-" + (i + 1) + "-" + n[2]).focus();
-						} else if (k == 8 && $(this).prop("readonly")) { // avoid backspace to to back one page (e.g. in Chrome)
+						} else if (k == 8 && $(this).prop("readonly")) { // backspace (to avoid going back one page e.g. in Chrome)
 							e.preventDefault();
 						}
 					})));
