@@ -22,7 +22,7 @@ $(document).ready(function() {
 		cols: 5,
 		rowlabels: true,
 		collabels: true,
-		width: [ 75, 50, 100, 200 ],
+		widths: [ 75, 50, 100, 200 ],
 		values: [
 					["a1", "b1", "c1", "d1"],
 					[1, 2, 3, 4],
@@ -45,6 +45,7 @@ $(document).ready(function() {
 	// Another example using functions
 	/*t.xtab("init", {
 		rows: 8, cols: 8,
+		widths: function(c) { return 100 + c*10; },
 		rowlabels: function(r) { return "row " + r; },
 		collabels: function(c) {
 			if (c%2 == 0) {
@@ -53,7 +54,10 @@ $(document).ready(function() {
 				return th;
 			}
 		},
-		values: function(r, c) { return "val " + r + ',' + c; }
+		values: function(r, c) {
+			var v = "val " + r + ',' + c
+			return c%2 == 0 ? v : { value: v, readonly: r%2 != 0, color: (r%2 == 0 ? "green" : undefined) };
+		}
 	});*/
 });
 </script>

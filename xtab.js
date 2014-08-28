@@ -50,6 +50,9 @@
 			if (v === undefined) return c.css(a);
 			c.css(a, v);
 		}
+		function color(c, v) {
+			css(c, "background-color", v)
+		}
 		function readonly(c, v) {
 			if (c === undefined) return;
 			if (v === undefined) return c.prop("readonly");
@@ -90,21 +93,36 @@
 				}
 				for (var c = 0; c < opts.cols; c++) {
 					var cell = $("<input/>", { type: "text", id: id + "-" + r + "-" + c }).prop("readonly", false).data("ref", ref(r, c));
+					var v = undefined;
 					if ($.isFunction(opts.values))
-						val(cell, opts.values.call(this, r, c));
+						v = opts.values.call(this, r, c);
 					else if (opts.values !== undefined && opts.values[r] !== undefined && opts.values[r][c] !== undefined)
-						val(cell, opts.values[r][c]);
+						v = opts.values[r][c];
+					if (v !== undefined) {
+						if ($.isPlainObject(v)) {
+							val(cell, v.value);
+							if (v.readonly !== undefined)
+								readonly(cell, v.readonly);
+							if (v.color !== undefined)
+								color(cell, v.color);
+						} else
+							val(cell, v);
+					}
 					if (opts.change !== undefined) cell.change(function() {
 						var cell = $(this);
 						var n = cell.attr("id").split("-");
 						opts.change.call(this, parseInt(n[1]), parseInt(n[2]), cell.val(), cell.data("ref"));
 					});
-					var w = typeof opts.width == "object" ? opts.width[c] : opts.width;
-					if (w > 0) cell.css("width", w + "px");
+					var w = 0;
+					if (opts.widths !== undefined)
+						w = $.isFunction(opts.widths) ? opts.widths.call(this, c) : opts.widths[c] !== undefined ? opts.widths[c] : opts.widths;
+					if (w !== undefined && w > 0)
+						cell.css("width", Math.round(w) + "px");
 					row.append($("<td/>").append(cell.keydown(function(e) {
 						var k = e.keyCode;
 						var p = e.target.selectionStart;
-						if (p == 0 && k == 37) { // left
+						var ro = $(this).prop("readonly")
+						if (k == 37 && (ro || p == 0)) { // left
 							e.preventDefault();
 							var n = $(this).attr("id").split("-");
 							var i = parseInt(n[2]);
@@ -114,7 +132,7 @@
 							var n = $(this).attr("id").split("-");
 							var i = parseInt(n[1]);
 							if (i > 0) $("#" + id + "-" + (i - 1) + "-" + n[2]).focus();
-						} else if (k == 39 && p == e.target.value.length) { // right
+						} else if (k == 39 && (ro || p == e.target.value.length)) { // right
 							e.preventDefault();
 							var n = $(this).attr("id").split("-");
 							var i = parseInt(n[2]);
@@ -124,7 +142,7 @@
 							var n = $(this).attr("id").split("-");
 							var i = parseInt(n[1]);
 							if (i < opts.rows) $("#" + id + "-" + (i + 1) + "-" + n[2]).focus();
-						} else if (k == 8 && $(this).prop("readonly")) { // backspace (to avoid going back one page e.g. in Chrome)
+						} else if (k == 8 && ro) { // backspace (to avoid going back one page e.g. in Chrome)
 							e.preventDefault();
 						}
 					})));
@@ -150,8 +168,10 @@
 				return val(find(), args[0]);
 		} else if (act == "focus") {
 			return find().focus();
+		} else if (act == "css") {
+			return css(find(), args[0], args[1]);
 		} else if (act == "color") {
-			return css(find(), "background-color", args[0]);
+			return color(find(), args[0]);
 		} else if (act == "readonly") {
 			return readonly(find(), args[0]);
 		} else {
