@@ -16,12 +16,13 @@ button { margin: 5px; }
 <script type="text/javascript">
 $(document).ready(function() {
 	var t = $("#t");
+	// Basic example
 	t.xtab("init", {
 		rows: 5,
 		cols: 5,
-		width: [ 75, 50, 100, 200 ],
-		colnumbers: true,
 		rownumbers: true,
+		colnumbers: true,
+		width: [ 75, 50, 100, 200 ],
 		values: [
 					["a1", "b1", "c1", "d1"],
 					[1, 2, 3, 4],
@@ -41,6 +42,19 @@ $(document).ready(function() {
 		t.xtab("readonly", "D2", !t.xtab("readonly", "D2"));
 		t.xtab("val", "D2", parseInt(t.xtab("val", "D2")) + 1);
 	});
+	// Another example using functions
+	/*t.xtab("init", {
+		rows: 8, cols: 8,
+		rownumbers: function(r) { return "row " + r; },
+		colnumbers: function(c) {
+			if (c%2 == 0) {
+				var th = $("<th/>", { colspan: 2 }).append("col " + c);
+				if (c%4 == 0) th.attr("style", "background: red; color: white;");
+				return th;
+			}
+		},
+		values: function(r, c) { return "val " + r + ',' + c; }
+	});*/
 });
 </script>
 </head>
