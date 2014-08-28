@@ -72,7 +72,7 @@
 					if ($.isFunction(opts.collabels)) {
 						var v = opts.collabels.call(this, c);
 						if (!v) continue;
-						row.append($(v).is("th") ? v : $("<th/>").text(v));
+						row.append(v.is && v.is("th") ? v : $("<th/>").text(v));
 					} else
 						row.append($("<th/>").text(n2c(c)));
 				}
@@ -84,7 +84,7 @@
 					if ($.isFunction(opts.rowlabels)) {
 						var v = opts.rowlabels.call(this, r);
 						if (!v) continue;
-						row.append($(v).is("th") ? v : $("<th/>").text(v));
+						row.append(v.is && v.is("th") ? v : $("<th/>").text(v));
 					} else
 						row.append($("<th/>").text(n2r(r)));
 				}
