@@ -1,6 +1,6 @@
 .xtab, .xtab tr, .xtab td, .xtab th, .xtab input, .xtab select, .xtab textarea { border: none 0px; padding: 0px; margin: 0px; border-collapse: collapse; }
 table.xtab { border: solid 1px gray; }
-.xtab td, .xtab th { border: dotted 1px gray; }
+.xtab td, .xtab th { border: dotted 1px gray; white-space: nowrap; }
 .xtab th { background-color: lightgray; font-weight: normal; text-align: center; padding: 0px 10px; }
 .xtab input, .xtab select, .xtab textarea { padding: 3px; width: 100px; }
 .xtab input.number { text-align: right; }
