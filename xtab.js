@@ -68,14 +68,26 @@
 				var row = $("<tr/>");
 				if (opts.rownumbers)
 					row.append($("<th/>"));
-				for (var c = 0; c < opts.cols; c++)
-					row.append($.isFunction(opts.colnumbers) ? opts.colnumbers.call(this, c) : $("<th/>").text(n2c(c)));
+				for (var c = 0; c < opts.cols; c++) {
+					if ($.isFunction(opts.colnumbers)) {
+						var v = opts.colnumbers.call(this, c);
+						if (!v) continue;
+						row.append($(v).is("th") ? v : $("<th/>").text(v));
+					} else
+						row.append($("<th/>").text(n2c(c)));
+				}
 				tab.append(row);
 			}
 			for (var r = 0; r < opts.rows; r++) {
 				var row = $("<tr/>");
-				if (opts.rownumbers)
-					row.append($.isFunction(opts.rownumbers) ? opts.rownumbers.call(this, c) : $("<th/>").text(n2r(r)));
+				if (opts.rownumbers) {
+					if ($.isFunction(opts.rownumbers)) {
+						var v = opts.rownumbers.call(this, r);
+						if (!v) continue;
+						row.append($(v).is("th") ? v : $("<th/>").text(v));
+					} else
+						row.append($("<th/>").text(n2r(r)));
+				}
 				for (var c = 0; c < opts.cols; c++) {
 					var cell = $("<input/>", { type: "text", id: id + "-" + r + "-" + c }).prop("readonly", false).data("ref", ref(r, c));
 					if ($.isFunction(opts.values))
