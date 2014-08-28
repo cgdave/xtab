@@ -8,8 +8,8 @@ xTab is a very simple spreadsheet-like table jQuery plugin.
 Usage:
 
 ```javascript
-// Creates a 10 rows and 20 columns table with headers
-$("#mydiv").xtab("init", { rows: 10, cols: 20, header: true });
+// Creates a 10 rows and 20 columns table (with columns and rows numbering)
+$("#mydiv").xtab("init", { rows: 10, cols: 20, colnumbers: true, rownumbers: true });
 // Get the table value as an 10x20 string array
 console.log($("#mydiv").xtab("val"));
 ```

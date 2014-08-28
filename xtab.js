@@ -1,6 +1,7 @@
 (function($) {
 	$.fn.xtab = function() {
 		var id = $(this).attr("id");
+		var opts = $(this).data("opts");
 		var args = [];
 		for (var i = 0; i < arguments.length; i++) args.push(arguments[i]); // arguments is not a regular array
 		function n2c(n) {
@@ -25,7 +26,7 @@
 		function ref(r, c) {
 			return n2c(c) + n2r(r);
 		}
-		function cell() {
+		function find() {
 			var r = -1;
 			var c = -1;
 			if (args.length > 0 && typeof args[0] === "string") {
@@ -39,31 +40,31 @@
 			if (r >= 0 && c >=0)
 				return $("#" + id + "-" + r + "-" + c);
 		}
-		function val(cell, val) {
-			if (cell === undefined) return;
-			if (val === undefined) return cell.val();
-			cell.val(val);
+		function val(c, v) {
+			if (c === undefined) return;
+			if (v === undefined) return c.val();
+			c.val(v);
 		}
-		function css(cell, attr, val) {
-			if (cell === undefined || attr === undefined) return;
-			if (val === undefined) return cell.css(attr);
-			cell.css(attr, val);
+		function css(c, a, v) {
+			if (c === undefined || a === undefined) return;
+			if (v === undefined) return c.css(a);
+			c.css(a, v);
 		}
-		function readonly(cell, val) {
-			if (cell === undefined) return;
-			if (val === undefined) return cell.prop("readonly");
-			cell.prop("readonly", val);
-			if (val) cell.addClass("readonly");
-			else cell.removeClass("readonly");
+		function readonly(c, v) {
+			if (c === undefined) return;
+			if (v === undefined) return c.prop("readonly");
+			c.prop("readonly", v);
+			if (v) c.addClass("readonly");
+			else c.removeClass("readonly");
 		}
 		var act = args.shift();
 		if (act == "init") {
-			var opts = args.shift();
+			opts = args.shift();
 			if (opts === undefined) opts = {};
 			if (opts.rows === undefined || parseInt(opts.rows) < 0) opts.rows = 10;
 			if (opts.cols === undefined || parseInt(opts.cols) < 0) opts.cols = 5;
 			var tab = $("<table/>").addClass("xtab");
-			if (opts.headers) {
+			if (opts.colnumbers) {
 				var row = $("<tr/>");
 				row.append($("<th/>"));
 				for (var c = 0; c < opts.cols; c++) row.append($("<th/>").text(n2c(c)));
@@ -71,7 +72,7 @@
 			}
 			for (var r = 0; r < opts.rows; r++) {
 				var row = $("<tr/>");
-				if (opts.headers) row.append($("<th/>").text(n2r(r)));
+				if (opts.rownumbers) row.append($("<th/>").text(n2r(r)));
 				for (var c = 0; c < opts.cols; c++) {
 					var cell = $("<input/>", { type: "text", id: id + "-" + r + "-" + c }).prop("readonly", false).data("ref", ref(r, c));
 					if (opts.values !== undefined && opts.values[r] !== undefined && opts.values[r][c] !== undefined) val(cell, opts.values[r][c]);
@@ -112,6 +113,7 @@
 				tab.append(row);
 			}
 			$(this).append(tab);
+			$(this).data("opts", opts);
 			$("#" + id + "-0-0").focus();
 			return this;
 		} else if (act == "val") {
@@ -126,13 +128,13 @@
 				});
 				return tab;
 			} else
-				return val(cell(), args[0]);
+				return val(find(), args[0]);
 		} else if (act == "focus") {
-			return cell().focus();
+			return find().focus();
 		} else if (act == "color") {
-			return css(cell(), "background-color", args[0]);
+			return css(find(), "background-color", args[0]);
 		} else if (act == "readonly") {
-			return readonly(cell(), args[0]);
+			return readonly(find(), args[0]);
 		} else {
 			console.error("Unknown action: " + act);
 		}
