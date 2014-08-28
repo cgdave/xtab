@@ -9,7 +9,7 @@ Usage:
 
 ```javascript
 // Creates a 10 rows and 20 columns table (with columns and rows numbering)
-$("#mydiv").xtab("init", { rows: 10, cols: 20, colnumbers: true, rownumbers: true });
+$("#mydiv").xtab("init", { rows: 10, cols: 20, collabels: true, rowlabels: true });
 // Get the table value as an 10x20 string array
 console.log($("#mydiv").xtab("val"));
 ```

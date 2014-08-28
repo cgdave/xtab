@@ -20,8 +20,8 @@ $(document).ready(function() {
 	t.xtab("init", {
 		rows: 5,
 		cols: 5,
-		rownumbers: true,
-		colnumbers: true,
+		rowlabels: true,
+		collabels: true,
 		width: [ 75, 50, 100, 200 ],
 		values: [
 					["a1", "b1", "c1", "d1"],
@@ -45,8 +45,8 @@ $(document).ready(function() {
 	// Another example using functions
 	/*t.xtab("init", {
 		rows: 8, cols: 8,
-		rownumbers: function(r) { return "row " + r; },
-		colnumbers: function(c) {
+		rowlabels: function(r) { return "row " + r; },
+		collabels: function(c) {
 			if (c%2 == 0) {
 				var th = $("<th/>", { colspan: 2 }).append("col " + c);
 				if (c%4 == 0) th.attr("style", "background: red; color: white;");

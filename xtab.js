@@ -64,13 +64,13 @@
 			if (opts.rows === undefined || parseInt(opts.rows) < 0) opts.rows = 10;
 			if (opts.cols === undefined || parseInt(opts.cols) < 0) opts.cols = 5;
 			var tab = $("<table/>").addClass("xtab");
-			if (opts.colnumbers) {
+			if (opts.collabels) {
 				var row = $("<tr/>");
-				if (opts.rownumbers)
+				if (opts.rowlabels)
 					row.append($("<th/>"));
 				for (var c = 0; c < opts.cols; c++) {
-					if ($.isFunction(opts.colnumbers)) {
-						var v = opts.colnumbers.call(this, c);
+					if ($.isFunction(opts.collabels)) {
+						var v = opts.collabels.call(this, c);
 						if (!v) continue;
 						row.append($(v).is("th") ? v : $("<th/>").text(v));
 					} else
@@ -80,9 +80,9 @@
 			}
 			for (var r = 0; r < opts.rows; r++) {
 				var row = $("<tr/>");
-				if (opts.rownumbers) {
-					if ($.isFunction(opts.rownumbers)) {
-						var v = opts.rownumbers.call(this, r);
+				if (opts.rowlabels) {
+					if ($.isFunction(opts.rowlabels)) {
+						var v = opts.rowlabels.call(this, r);
 						if (!v) continue;
 						row.append($(v).is("th") ? v : $("<th/>").text(v));
 					} else
