@@ -77,7 +77,7 @@
 			if (opts.collabels) {
 				var row = $("<tr/>");
 				if (opts.rowlabels)
-					row.append($("<th/>"));
+					row.append($("<th/>").append("&nbsp;"));
 				for (var c = 0; c < opts.cols; c++) {
 					if ($.isFunction(opts.collabels)) {
 						var v = opts.collabels.call(this, c);
