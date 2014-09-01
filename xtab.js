@@ -73,15 +73,14 @@
 			if (opts === undefined) opts = {};
 			if (opts.rows === undefined || parseInt(opts.rows) < 0) opts.rows = 10;
 			if (opts.cols === undefined || parseInt(opts.cols) < 0) opts.cols = 5;
-			if (opts.width === undefined || parseInt(opts.width) < 0) opts.width = 0;
 			var tab = $("<table/>").addClass("xtab"), tabh;
-			if (opts.width > 0)
+			if (opts.split)
 				tabh = $("<table/>").addClass("xtab");
 			if (opts.collabels) {
 				var row = $("<tr/>");
 				if (opts.rowlabels)
-					var th = $("<th/>").append("&nbsp;");
-					if (opts.width > 0)
+					var th = $("<th/>").append(opts.mainlabel ? opts.mainlabel : "&nbsp;");
+					if (opts.split)
 						tabh.append($("<tr/>").append(th));
 					else
 						row.append(th);
@@ -105,7 +104,7 @@
 						th = v.is && v.is("th") ? v : $("<th/>").text(v);
 					} else
 						th = $("<th/>").text(n2r(r));
-					if (opts.width > 0)
+					if (opts.split)
 						tabh.append($("<tr/>").append(th));
 					else
 						row.append(th);
@@ -160,9 +159,11 @@
 				}
 				tab.append(row);
 			}
-			if (opts.width > 0) {
-				$(this).append($("<div/>", { style: "float: left;" }).append(tabh));
-				$(this).append($("<div/>", { style: "width: " + opts.width + "px; overflow: auto;" }).append(tab));
+			if (opts.split) {
+				var ct = $("<div/>", { style: "white-space: nowrap; overflow: hidden;" });
+				ct.append($("<div/>", { style: "float: left;" }).append(tabh));
+				ct.append($("<div/>", { style: "overflow: auto;" }).append(tab));
+				$(this).append(ct);
 			} else
 				$(this).append(tab);
 			$(this).data("opts", opts);
@@ -170,15 +171,15 @@
 			return this;
 		} else if (act == "val") {
 			if (args.length == 0) {
-				var tab = [];
+				var t = [];
 				$(this).find(".xtab tr").each(function() {
 					var row = [];
 					$(this).find("input").each(function() {
 						row.push($(this).val());
 					});
-					if (row.length > 0) tab.push(row);
+					if (row.length > 0) t.push(row);
 				});
-				return tab;
+				return t;
 			} else
 				return val(find(), args[0]);
 		} else if (act == "focus") {
