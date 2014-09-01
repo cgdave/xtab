@@ -73,11 +73,18 @@
 			if (opts === undefined) opts = {};
 			if (opts.rows === undefined || parseInt(opts.rows) < 0) opts.rows = 10;
 			if (opts.cols === undefined || parseInt(opts.cols) < 0) opts.cols = 5;
-			var tab = $("<table/>").addClass("xtab");
+			if (opts.width === undefined || parseInt(opts.width) < 0) opts.width = 0;
+			var tab = $("<table/>").addClass("xtab"), tabh;
+			if (opts.width > 0)
+				tabh = $("<table/>").addClass("xtab");
 			if (opts.collabels) {
 				var row = $("<tr/>");
 				if (opts.rowlabels)
-					row.append($("<th/>").append("&nbsp;"));
+					var th = $("<th/>").append("&nbsp;");
+					if (opts.width > 0)
+						tabh.append($("<tr/>").append(th));
+					else
+						row.append(th);
 				for (var c = 0; c < opts.cols; c++) {
 					if ($.isFunction(opts.collabels)) {
 						var v = opts.collabels.call(this, c);
@@ -91,12 +98,17 @@
 			for (var r = 0; r < opts.rows; r++) {
 				var row = $("<tr/>");
 				if (opts.rowlabels) {
+					var th;
 					if ($.isFunction(opts.rowlabels)) {
 						var v = opts.rowlabels.call(this, r);
 						if (!v) continue;
-						row.append(v.is && v.is("th") ? v : $("<th/>").text(v));
+						th = v.is && v.is("th") ? v : $("<th/>").text(v);
 					} else
-						row.append($("<th/>").text(n2r(r)));
+						th = $("<th/>").text(n2r(r));
+					if (opts.width > 0)
+						tabh.append($("<tr/>").append(th));
+					else
+						row.append(th);
 				}
 				for (var c = 0; c < opts.cols; c++) {
 					var cell = $("<input/>", { type: "text", id: id + "-" + r + "-" + c }).prop("readonly", false).data("ref", ref(r, c));
@@ -148,7 +160,11 @@
 				}
 				tab.append(row);
 			}
-			$(this).append(tab);
+			if (opts.width > 0) {
+				$(this).append($("<div/>", { style: "float: left;" }).append(tabh));
+				$(this).append($("<div/>", { style: "width: " + opts.width + "px; overflow: auto;" }).append(tab));
+			} else
+				$(this).append(tab);
 			$(this).data("opts", opts);
 			$("#" + id + "-0-0").focus();
 			return this;
