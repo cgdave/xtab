@@ -136,22 +136,22 @@
 							e.preventDefault();
 							var n = $(this).attr("id").split("-");
 							var i = parseInt(n[2]);
-							if (i > 0) $("#" + id + "-" + n[1] + "-" + (i - 1)).focus();
+							if (i > 0) { var c = $("#" + id + "-" + n[1] + "-" + (i - 1)); c.select(); c.focus(); }
 						} else if (k == 38) { // up
 							e.preventDefault();
 							var n = $(this).attr("id").split("-");
 							var i = parseInt(n[1]);
-							if (i > 0) $("#" + id + "-" + (i - 1) + "-" + n[2]).focus();
+							if (i > 0) { var c = $("#" + id + "-" + (i - 1) + "-" + n[2]); c.select(); c.focus() };
 						} else if (k == 39 && (ro || p == e.target.value.length)) { // right
 							e.preventDefault();
 							var n = $(this).attr("id").split("-");
 							var i = parseInt(n[2]);
-							if (i < opts.cols) $("#" + id + "-" + n[1] + "-" + (i + 1)).focus();
+							if (i < opts.cols) { var c = $("#" + id + "-" + n[1] + "-" + (i + 1)); c.select(); c.focus(); }
 						} else if (k == 40 || k == 13) { // down or enter
 							e.preventDefault();
 							var n = $(this).attr("id").split("-");
 							var i = parseInt(n[1]);
-							if (i < opts.rows) $("#" + id + "-" + (i + 1) + "-" + n[2]).focus();
+							if (i < opts.rows) { var c = $("#" + id + "-" + (i + 1) + "-" + n[2]); c.select(); c.focus(); }
 						} else if (k == 8 && ro) { // backspace (to avoid going back one page e.g. in Chrome)
 							e.preventDefault();
 						}
