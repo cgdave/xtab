@@ -136,22 +136,22 @@
 							e.preventDefault();
 							var n = $(this).attr("id").split("-");
 							var i = parseInt(n[2]);
-							if (i > 0) { var c = $("#" + id + "-" + n[1] + "-" + (i - 1)); c.select(); c.focus(); }
+							if (i > 0) { var cell = $("#" + id + "-" + n[1] + "-" + (i - 1)); cell.select(); cell.focus(); }
 						} else if (k == 38) { // up
 							e.preventDefault();
 							var n = $(this).attr("id").split("-");
 							var i = parseInt(n[1]);
-							if (i > 0) { var c = $("#" + id + "-" + (i - 1) + "-" + n[2]); c.select(); c.focus() };
+							if (i > 0) { var cell = $("#" + id + "-" + (i - 1) + "-" + n[2]); cell.select(); cell.focus() };
 						} else if (k == 39 && (ro || p == e.target.value.length)) { // right
 							e.preventDefault();
 							var n = $(this).attr("id").split("-");
 							var i = parseInt(n[2]);
-							if (i < opts.cols) { var c = $("#" + id + "-" + n[1] + "-" + (i + 1)); c.select(); c.focus(); }
+							if (i < opts.cols) { var cell = $("#" + id + "-" + n[1] + "-" + (i + 1)); cell.select(); cell.focus(); }
 						} else if (k == 40 || k == 13) { // down or enter
 							e.preventDefault();
 							var n = $(this).attr("id").split("-");
 							var i = parseInt(n[1]);
-							if (i < opts.rows) { var c = $("#" + id + "-" + (i + 1) + "-" + n[2]); c.select(); c.focus(); }
+							if (i < opts.rows) { var cell = $("#" + id + "-" + (i + 1) + "-" + n[2]); cell.select(); cell.focus(); }
 						} else if (k == 8 && ro) { // backspace (to avoid going back one page e.g. in Chrome)
 							e.preventDefault();
 						}
@@ -167,7 +167,9 @@
 			} else
 				$(this).append(tab);
 			$(this).data("opts", opts);
-			$("#" + id + "-0-0").focus();
+			var cell = $("#" + id + "-0-0");
+			cell.select();
+			cell.focus();
 			return this;
 		} else if (act == "val") {
 			if (args.length == 0) {
@@ -183,7 +185,10 @@
 			} else
 				return val(find(), args[0]);
 		} else if (act == "focus") {
-			return find().focus();
+			var cell = find();
+			cell.select();
+			cell.focus();
+			return cell;
 		} else if (act == "css") {
 			return css(find(), args[0], args[1]);
 		} else if (act == "color") {
