@@ -110,7 +110,7 @@
 						row.append(th);
 				}
 				for (var c = 0; c < opts.cols; c++) {
-					var cell = $("<input/>", { type: "text", id: id + "-" + r + "-" + c }).prop("readonly", false).data("ref", ref(r, c));
+					var cell = $("<input/>", { type: "text", id: id + "-" + r + "-" + c }).prop("readonly", false).data("ref", ref(r, c)).click(function() { $(this).select(); });
 					var v = undefined;
 					if ($.isFunction(opts.values))
 						v = opts.values.call(this, r, c);
