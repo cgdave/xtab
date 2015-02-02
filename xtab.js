@@ -128,7 +128,6 @@
 						var n = cell.attr("id").split("-");
 						var r = parseInt(n[1]);
 						var c = parseInt(n[2]);
-						console.log("focus out " + r + "," + c);
 						var ch = $("#" + id + "-col-" + c);
 						if (ch)
 							ch.removeClass("current");
@@ -141,7 +140,6 @@
 						var n = cell.attr("id").split("-");
 						var r = parseInt(n[1]);
 						var c = parseInt(n[2]);
-						console.log("focus in " + r + "," + c);
 						var ch = $("#" + id + "-col-" + c);
 						if (ch)
 							ch.addClass("current");
