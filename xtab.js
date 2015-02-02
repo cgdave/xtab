@@ -88,9 +88,9 @@
 					if ($.isFunction(opts.collabels)) {
 						var v = opts.collabels.call(this, c);
 						if (!v) continue;
-						row.append(v.is && v.is("th") ? v : $("<th/>").text(v));
+						row.append(v.is && v.is("th") ? v : $("<th/>", { id: id + "-col-" + c }).text(v));
 					} else
-						row.append($("<th/>").text(n2c(c)));
+						row.append($("<th/>", { id: id + "-col-" + c }).text(n2c(c)));
 				}
 				tab.append(row);
 			}
@@ -101,9 +101,9 @@
 					if ($.isFunction(opts.rowlabels)) {
 						var v = opts.rowlabels.call(this, r);
 						if (!v) continue;
-						th = v.is && v.is("th") ? v : $("<th/>").text(v);
+						th = v.is && v.is("th") ? v : $("<th/>", { id: id + "-row-" + r }).text(v);
 					} else
-						th = $("<th/>").text(n2r(r));
+						th = $("<th/>", { id: id + "-row-" + r }).text(n2r(r));
 					if (opts.split)
 						tabh.append($("<tr/>").append(th));
 					else
@@ -123,6 +123,34 @@
 						var n = cell.attr("id").split("-");
 						opts.change.call(this, parseInt(n[1]), parseInt(n[2]), cell.val(), cell.data("ref"));
 					});
+					cell.focusout(function() {
+						var cell = $(this);
+						var n = cell.attr("id").split("-");
+						var r = parseInt(n[1]);
+						var c = parseInt(n[2]);
+						console.log("focus out " + r + "," + c);
+						var ch = $("#" + id + "-col-" + c);
+						if (ch)
+							ch.removeClass("current");
+						var rh = $("#" + id + "-row-" + r);
+						if (rh)
+							rh.removeClass("current");
+					});
+					cell.focusin(function() {
+						var cell = $(this);
+						var n = cell.attr("id").split("-");
+						var r = parseInt(n[1]);
+						var c = parseInt(n[2]);
+						console.log("focus in " + r + "," + c);
+						var ch = $("#" + id + "-col-" + c);
+						if (ch)
+							ch.addClass("current");
+						var rh = $("#" + id + "-row-" + r);
+						if (rh)
+							rh.addClass("current");
+						if (opts.focus !== undefined)
+							opts.focus.call(this, r, c, cell.val(), cell.data("ref"));
+					});
 					var w = 0;
 					if (opts.widths !== undefined)
 						w = $.isFunction(opts.widths) ? opts.widths.call(this, c) : opts.widths[c] !== undefined ? opts.widths[c] : opts.widths;
@@ -141,7 +169,7 @@
 							e.preventDefault();
 							var n = $(this).attr("id").split("-");
 							var i = parseInt(n[1]);
-							if (i > 0) { var cell = $("#" + id + "-" + (i - 1) + "-" + n[2]); cell.select(); cell.focus() };
+							if (i > 0) { var cell = $("#" + id + "-" + (i - 1) + "-" + n[2]); cell.select(); cell.focus(); };
 						} else if (k == 39 && (ro || p == e.target.value.length)) { // right
 							e.preventDefault();
 							var n = $(this).attr("id").split("-");

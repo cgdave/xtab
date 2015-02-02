@@ -2,7 +2,8 @@
 table.xtab { border: solid 1px gray; }
 .xtab td, .xtab th { font-size: 10pt; white-space: nowrap; height: 25px; }
 .xtab td { border: dotted 1px gray; }
-.xtab th { border: solid 1px gray; background-color: lightgray; font-weight: normal; text-align: center; vertical-align: middle; padding: 0px 4px; overflow: hidden; }
+.xtab th { border: solid 1px gray; background-color: #E0E0E0; font-weight: normal; text-align: center; vertical-align: middle; padding: 0px 4px; overflow: hidden; }
+.xtab th.current { background-color: #C0C0C0; }
 .xtab input, .xtab select, .xtab textarea { font-size: 10pt; padding: 0px 4px; height: 100%; width: 100px; }
 .xtab input.number { text-align: right; }
 .xtab input.readonly { font-style:italic; background-color: #F7F7F7; }

@@ -32,7 +32,10 @@ $(document).ready(function() {
 					[true, false, true, false]
 				],
 		change: function(r, c, val, ref) {
-			console.log("[" + r + ", " + c + "] = \"" + ref + "\": " + val);
+			console.log("CHANGE [" + r + ", " + c + "] = \"" + ref + "\": " + val);
+		},
+		focus: function(r, c, val, ref) {
+			console.log("FOCUS [" + r + ", " + c + "] = \"" + ref + "\": " + val);
 		}
 	});
 	t.xtab("color", "A3", "lightblue");
