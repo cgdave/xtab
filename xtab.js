@@ -88,7 +88,7 @@
 					if ($.isFunction(opts.collabels)) {
 						var v = opts.collabels.call(this, c);
 						if (!v) continue;
-						row.append(v.is && v.is("th") ? v : $("<th/>", { id: id + "-col-" + c }).text(v));
+						row.append(v.is && v.is("th") ? v : $("<th/>", { id: id + "-col-" + c }).append(v));
 					} else
 						row.append($("<th/>", { id: id + "-col-" + c }).text(n2c(c)));
 				}
@@ -101,7 +101,7 @@
 					if ($.isFunction(opts.rowlabels)) {
 						var v = opts.rowlabels.call(this, r);
 						if (!v) continue;
-						th = v.is && v.is("th") ? v : $("<th/>", { id: id + "-row-" + r }).text(v);
+						th = v.is && v.is("th") ? v : $("<th/>", { id: id + "-row-" + r }).append(v);
 					} else
 						th = $("<th/>", { id: id + "-row-" + r }).text(n2r(r));
 					if (opts.split)
